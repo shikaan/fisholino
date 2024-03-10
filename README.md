@@ -34,3 +34,8 @@ emmake cmake --build build
 # Launch the game
 python -m http.server --directory ./build/public 1234 & open http://localhost:1234
 ```
+
+## Assets
+
+* font: [FFF forward](https://www.1001fonts.com/fff-forward-font.html)
+* music: **I am unable to attribute, I had it in a random hard drive. If it's yours or you know who it belongs to, reach out** 
