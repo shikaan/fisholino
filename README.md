@@ -1,13 +1,17 @@
-Fisholino
----
+<h1 align="center">Fisholino</h1>
 
-Test game for the `latebit` game engine.
+<p align="center">
+  <img width="50%" src="https://github.com/shikaan/fisholino/assets/17052868/735aa453-9a50-45c0-923d-57162355d753" alt="screenshot">
+</p>
+
+<p align="center">
+  Test game for the <a href="https://github.com/shikaan/latebit">latebit</a> game engine.
+</p>
 
 ## Dependencies
 
 * cmake (>=3.28.1)
 * emscripten (>=3.1.51)
-
 
 ## Native build
 
