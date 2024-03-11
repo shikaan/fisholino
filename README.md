@@ -8,6 +8,12 @@ Test game for the `latebit` game engine.
 * cmake (>=3.28.1)
 * emscripten (>=3.1.51)
 
+> [!IMPORTANT]  
+> On MacOS you may see an `dyld[XXX]: Library not loaded: 'libunwind.1.dylib'` error.
+> That's because on some systems, that library is called `libunwind.1.0.dylib`.
+>
+> In such cases, you can either symlink `libunwind.1.0.dylib` to `libunwind.1.dylib`
+> or just copy it in the [./lib](`lib`) folder with the `libunwind.1.dylib` name.
 
 ## Native build
 
