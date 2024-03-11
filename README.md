@@ -1,13 +1,24 @@
-Fisholino
----
+<h1 align="center">Fisholino</h1>
 
-Test game for the `latebit` game engine.
+<p align="center">
+  <img width="50%" src="https://github.com/shikaan/fisholino/assets/17052868/735aa453-9a50-45c0-923d-57162355d753" alt="screenshot">
+</p>
+
+<p align="center">
+  Test game for the <a href="https://github.com/shikaan/latebit">latebit</a> game engine.
+</p>
 
 ## Dependencies
 
 * cmake (>=3.28.1)
 * emscripten (>=3.1.51)
 
+> [!IMPORTANT]  
+> On MacOS you may see an `dyld[XXX]: Library not loaded: 'libunwind.1.dylib'` error.
+> That's because on some systems, that library is called `libunwind.1.0.dylib`.
+>
+> In such cases, you can either symlink `libunwind.1.0.dylib` to `libunwind.1.dylib`
+> or just copy it in the [./lib](`lib`) folder with the `libunwind.1.dylib` name.
 
 ## Native build
 
