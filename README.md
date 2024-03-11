@@ -18,7 +18,7 @@
 > That's because on some systems, that library is called `libunwind.1.0.dylib`.
 >
 > In such cases, you can either symlink `libunwind.1.0.dylib` to `libunwind.1.dylib`
-> or just copy it in the [./lib](`lib`) folder with the `libunwind.1.dylib` name.
+> or just copy it in the [`lib`](./lib) folder with the `libunwind.1.dylib` name.
 
 ## Native build
 
