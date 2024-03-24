@@ -39,9 +39,9 @@ private:
 
   void move(int dy) {
     auto position = getPosition();
-    position.setY(clamp(position.getY() + dy * 4, HUD::HEIGHT + 1,
+    position.setY(clamp((int)position.getY() + dy * 4.0, HUD::HEIGHT + 1.0,
                         DM.getVerticalCells() - (Floor::HEIGHT) -
-                            this->getBox().getHeight() - 1));
+                            (int)this->getBox().getHeight() - 1));
     setPosition(position);
   }
 
