@@ -1,6 +1,7 @@
 #include "./GameOverEvent.cpp"
 #include "./GameStartEvent.cpp"
 #include "./ScoreEvent.cpp"
+#include <latebit/Colors.h>
 #include <latebit/DisplayManager.h>
 #include <latebit/EventKeyboard.h>
 #include <latebit/GameManager.h>
@@ -12,11 +13,14 @@
 
 using namespace lb;
 
+const Vector CENTER =
+    Vector(DM.getHorizontalCells() / 2, DM.getVerticalCells() / 2);
+
 class GameOver : public lb::Object {
 private:
   bool shouldDraw = false;
   int score = 0;
-  Frame frame;
+  Frame background;
   Music *music;
 
 public:
@@ -32,7 +36,7 @@ public:
     for (int i = 0; i < DM.getHorizontalCells() * DM.getVerticalCells(); i++) {
       content.push_back(BLACK);
     }
-    this->frame =
+    this->background =
         Frame(DM.getHorizontalCells(), DM.getVerticalCells(), content);
   };
 
@@ -81,28 +85,25 @@ public:
       return 0;
 
     this->music->stop();
-    int result = this->frame.draw(Vector());
+    int result = this->background.draw(Vector());
 
-    result += DM.drawString(
-        lb::Vector(DM.getHorizontalCells() / 2.0,
-                   DM.getVerticalCells() / 2.0 - FONT_SIZE_DEFAULT),
-        "GAME OVER", ALIGN_CENTER, WHITE);
+    result += DM.drawString(CENTER - Vector(0, 32), "GAME OVER",
+                            TEXT_ALIGN_CENTER, RED, TEXT_SIZE_XLARGE);
+    result += DM.drawString(CENTER - Vector(1, 33), "GAME OVER",
+                            TEXT_ALIGN_CENTER, WHITE, TEXT_SIZE_XLARGE);
 
     char s[16];
-    sprintf(s, "Score: %d", score);
-    result += DM.drawString(
-        lb::Vector(DM.getHorizontalCells() / 2.0, DM.getVerticalCells() / 2.0),
-        s, ALIGN_CENTER, WHITE);
+    snprintf(s, 16, "SCORE: %d", score);
+    result +=
+        DM.drawString(CENTER, s, TEXT_ALIGN_CENTER, WHITE, TEXT_SIZE_LARGE);
 
-    result += DM.drawString(
-        lb::Vector(DM.getHorizontalCells() / 2.0,
-                   DM.getVerticalCells() / 2.0 + FONT_SIZE_DEFAULT),
-        "Press [Esc] to close", ALIGN_CENTER, WHITE);
+#ifndef __EMSCRIPTEN__
+    result += DM.drawString(CENTER + Vector(0, 24), "Press [Esc] to close",
+                            TEXT_ALIGN_CENTER, WHITE);
+#endif
 
-    result += DM.drawString(
-        lb::Vector(DM.getHorizontalCells() / 2.0,
-                   DM.getVerticalCells() / 2.0 + FONT_SIZE_DEFAULT * 2),
-        "Press [Return] to restart", ALIGN_CENTER, WHITE);
+    result += DM.drawString(CENTER + Vector(0, 40), "Press [Return] to restart",
+                            TEXT_ALIGN_CENTER, WHITE);
 
     return result;
   };

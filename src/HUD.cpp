@@ -1,11 +1,11 @@
 #pragma once
 
+#include "ScoreEvent.cpp"
+#include <cstdio>
 #include <latebit/Colors.h>
 #include <latebit/DisplayManager.h>
 #include <latebit/Object.h>
 #include <latebit/SceneGraph.h>
-#include "ScoreEvent.cpp"
-#include <cstdio>
 #include <vector>
 
 using namespace lb;
@@ -33,10 +33,11 @@ public:
 
   int draw() {
     char score[17];
-    sprintf(score, "SCORE: %d", this->score);
+    snprintf(score, 17, "SCORE: %d", this->score);
 
     int result = this->cell.draw(Vector());
-    result += DM.drawString(Vector(DM.getHorizontalCells()/2, 1), score, ALIGN_CENTER, WHITE);
+    result += DM.drawString(Vector(DM.getHorizontalCells() / 2, 4), score,
+                            TEXT_ALIGN_CENTER, WHITE);
 
     return result;
   }
