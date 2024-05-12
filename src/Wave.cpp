@@ -1,7 +1,7 @@
-#include <latebit/Colors.h>
-#include <latebit/DisplayManager.h>
-#include <latebit/EventOut.h>
-#include <latebit/Object.h>
+#include <latebit/core/graphics/Colors.h>
+#include <latebit/core/graphics/DisplayManager.h>
+#include <latebit/core/events/EventOut.h>
+#include <latebit/core/objects/Object.h>
 
 using namespace lb;
 

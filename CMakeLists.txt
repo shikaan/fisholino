@@ -22,7 +22,7 @@ else()
   set(SYSTEM_NAME ${CMAKE_SYSTEM_NAME})
 endif()
 
-fetch_latebit("v0.1.0-rc.5" ${SYSTEM_NAME})
+fetch_latebit("v0.4.1" ${SYSTEM_NAME})
 
 if (WASM)
   set(OUTPUT "public/index.html")
@@ -34,8 +34,6 @@ if (WASM)
 
   set(EMSCRIPTEN_FLAGS
     "-sUSE_SDL=2"
-    "-sUSE_SDL_MIXER=2"
-    "-sSDL2_MIXER_FORMATS=[wav,mp3]"
   )
   
   foreach(FLAG ${EMSCRIPTEN_FLAGS})

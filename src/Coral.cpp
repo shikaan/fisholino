@@ -1,9 +1,9 @@
 #include "./Floor.cpp"
 #include "./helpers.h"
-#include <latebit/Animation.h>
-#include <latebit/DisplayManager.h>
-#include <latebit/EventOut.h>
-#include <latebit/Object.h>
+#include <latebit/core/graphics/Animation.h>
+#include <latebit/core/graphics/DisplayManager.h>
+#include <latebit/core/events/EventOut.h>
+#include <latebit/core/objects/Object.h>
 
 using namespace lb;
 

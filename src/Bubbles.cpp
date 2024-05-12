@@ -1,4 +1,4 @@
-#include <latebit/Object.h>
+#include <latebit/core/objects/Object.h>
 
 using namespace lb;
 

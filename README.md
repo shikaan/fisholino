@@ -32,8 +32,3 @@ emmake cmake -B build -DWASM=ON && emmake cmake --build build
 # Launch the game
 python -m http.server --directory ./build/public 1234 & open http://localhost:1234
 ```
-
-## Assets
-
-> [!IMPORTANT]
-> I am unable to attribute the music. I had this track sitting on my hard drive and I used it. If it's yours or you know the artist, please reach out. 

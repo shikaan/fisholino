@@ -3,14 +3,15 @@
 #include "./GameOverEvent.cpp"
 #include "./HUD.cpp"
 #include "./helpers.h"
-#include <latebit/DisplayManager.h>
-#include <latebit/EventCollision.h>
-#include <latebit/EventKeyboard.h>
-#include <latebit/EventStep.h>
-#include <latebit/Object.h>
-#include <latebit/ResourceManager.h>
-#include <latebit/WorldManager.h>
-#include <latebit/utils.h>
+#include <latebit/core/graphics/DisplayManager.h>
+#include <latebit/core/events/EventCollision.h>
+#include <latebit/core/events/EventKeyboard.h>
+#include <latebit/core/events/EventStep.h>
+#include <latebit/core/objects/Object.h>
+#include <latebit/core/ResourceManager.h>
+#include <latebit/core/objects/WorldManager.h>
+#include <latebit/core/audio/Sound.h>
+#include <latebit/utils/Math.h>
 
 using namespace lb;
 
@@ -31,7 +32,7 @@ private:
       dashingTicks = 10;
       setVelocity(Vector(2, 0));
       setSprite("player-dash");
-      this->dash->play(false);
+      this->dash->play();
       return 1;
     }
     return 0;

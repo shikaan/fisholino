@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
-#include <latebit/EventCollision.h>
-#include <latebit/Object.h>
+#include <latebit/core/events/EventCollision.h>
+#include <latebit/core/objects/Object.h>
 
 using namespace lb;
 using namespace std;
