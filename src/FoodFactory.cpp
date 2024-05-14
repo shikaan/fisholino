@@ -1,11 +1,11 @@
 #pragma once
 
 #include "./Food.cpp"
-#include <latebit/EventStep.h>
-#include <latebit/Object.h>
-#include <latebit/ObjectList.h>
-#include <latebit/ObjectListIterator.h>
-#include <latebit/WorldManager.h>
+#include <latebit/core/events/EventStep.h>
+#include <latebit/core/objects/Object.h>
+#include <latebit/core/objects/ObjectList.h>
+#include <latebit/core/objects/ObjectListIterator.h>
+#include <latebit/core/objects/WorldManager.h>
 
 using namespace lb;
 

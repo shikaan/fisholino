@@ -1,9 +1,9 @@
 #pragma once
 
-#include <latebit/Colors.h>
-#include <latebit/DisplayManager.h>
-#include <latebit/Frame.h>
-#include <latebit/Object.h>
+#include <latebit/core/graphics/Colors.h>
+#include <latebit/core/graphics/DisplayManager.h>
+#include <latebit/core/graphics/Frame.h>
+#include <latebit/core/objects/Object.h>
 
 using namespace lb;
 

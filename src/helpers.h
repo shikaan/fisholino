@@ -1,8 +1,8 @@
 #pragma once
 #include <stdlib.h>
 
-#include <latebit/Event.h>
-#include <latebit/Object.h>
+#include <latebit/core/events/Event.h>
+#include <latebit/core/objects/Object.h>
 
 using namespace lb;
 using namespace std;

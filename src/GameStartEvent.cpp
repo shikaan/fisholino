@@ -1,5 +1,5 @@
 #pragma once
-#include <latebit/Event.h>
+#include <latebit/core/events/Event.h>
 
 using namespace lb;
 

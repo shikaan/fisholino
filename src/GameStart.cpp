@@ -1,3 +1,5 @@
+#include <latebit/core/audio/Music.h>
+#include <latebit/core/objects/Object.h>
 #include "./Coral.cpp"
 #include "./EnemyFactory.cpp"
 #include "./Floor.cpp"
@@ -7,15 +9,13 @@
 #include "./HUD.cpp"
 #include "./Player.cpp"
 #include "./Wave.cpp"
-#include <latebit/Music.h>
-#include <latebit/Object.h>
 #include "helpers.h"
 
 using namespace lb;
 
 class GameStart : public lb::Object {
 private:
-  Music *music;
+  Music *music = RM.getMusic("music");
 
 public:
   void start() {

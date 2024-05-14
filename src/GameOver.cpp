@@ -1,15 +1,15 @@
 #include "./GameOverEvent.cpp"
 #include "./GameStartEvent.cpp"
 #include "./ScoreEvent.cpp"
-#include <latebit/Colors.h>
-#include <latebit/DisplayManager.h>
-#include <latebit/EventKeyboard.h>
-#include <latebit/GameManager.h>
-#include <latebit/Music.h>
-#include <latebit/Object.h>
-#include <latebit/ObjectListIterator.h>
-#include <latebit/ResourceManager.h>
-#include <latebit/WorldManager.h>
+#include <latebit/core/graphics/Colors.h>
+#include <latebit/core/graphics/DisplayManager.h>
+#include <latebit/core/events/EventKeyboard.h>
+#include <latebit/core/GameManager.h>
+#include <latebit/core/audio/Music.h>
+#include <latebit/core/objects/Object.h>
+#include <latebit/core/objects/ObjectListIterator.h>
+#include <latebit/core/ResourceManager.h>
+#include <latebit/core/objects/WorldManager.h>
 
 using namespace lb;
 

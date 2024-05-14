@@ -6,10 +6,10 @@
 #include "./HUD.cpp"
 #include "./ScoreEvent.cpp"
 #include "./helpers.h"
-#include <latebit/DisplayManager.h>
-#include <latebit/EventOut.h>
-#include <latebit/Object.h>
-#include <latebit/WorldManager.h>
+#include <latebit/core/graphics/DisplayManager.h>
+#include <latebit/core/events/EventOut.h>
+#include <latebit/core/objects/Object.h>
+#include <latebit/core/objects/WorldManager.h>
 
 using namespace lb;
 using namespace std;

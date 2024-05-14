@@ -2,10 +2,10 @@
 
 #include "ScoreEvent.cpp"
 #include <cstdio>
-#include <latebit/Colors.h>
-#include <latebit/DisplayManager.h>
-#include <latebit/Object.h>
-#include <latebit/SceneGraph.h>
+#include <latebit/core/graphics/Colors.h>
+#include <latebit/core/graphics/DisplayManager.h>
+#include <latebit/core/objects/Object.h>
+#include <latebit/core/objects/SceneGraph.h>
 #include <vector>
 
 using namespace lb;

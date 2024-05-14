@@ -17,7 +17,7 @@
 
 ```sh
 # Configure, build, and run the game
-cmake -B build && cmake --builb build -t run
+cmake -B build && cmake --build build && ./build/Fisholino
 ```
 
 ## Web
@@ -26,14 +26,6 @@ cmake -B build && cmake --builb build -t run
 # In case you started with a native build
 rm -rf build/
 
-# Configure and build the game
-emmake cmake -B build -DWASM=ON && emmake cmake --build build
-
-# Launch the game
-python -m http.server --directory ./build/public 1234 & open http://localhost:1234
+# Configure, build, and launch the game
+emcmake cmake -B build && emmake cmake --build build && emrun build/public
 ```
-
-## Assets
-
-> [!IMPORTANT]
-> I am unable to attribute the music. I had this track sitting on my hard drive and I used it. If it's yours or you know the artist, please reach out. 
