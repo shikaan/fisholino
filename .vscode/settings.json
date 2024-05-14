@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "*.scm": "racket",
+    "chrono": "cpp"
+  }
+}

@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "latebit",
+			"typ": "build",
+			"problemMatcher": [ ],
+			"label": "latebit: Build",
+			"detail": "Build the project.",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
