@@ -1,5 +1,5 @@
 #include "./Floor.cpp"
-#include "./helpers.h"
+#include "helpers.h"
 #include <latebit/core/graphics/Animation.h>
 #include <latebit/core/graphics/DisplayManager.h>
 #include <latebit/core/events/EventOut.h>

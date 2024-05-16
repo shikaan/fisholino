@@ -2,10 +2,10 @@
 
 #include <cmath>
 
-#include "./Floor.cpp"
-#include "./HUD.cpp"
-#include "./ScoreEvent.cpp"
-#include "./helpers.h"
+#include "props/props.h"
+#include "ui/ui.h"
+#include "events/events.h"
+#include "helpers.h"
 #include <latebit/core/graphics/DisplayManager.h>
 #include <latebit/core/events/EventOut.h>
 #include <latebit/core/objects/Object.h>

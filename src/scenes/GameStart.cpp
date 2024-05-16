@@ -1,14 +1,10 @@
 #include <latebit/core/audio/Music.h>
 #include <latebit/core/objects/Object.h>
-#include "./Coral.cpp"
-#include "./EnemyFactory.cpp"
-#include "./Floor.cpp"
-#include "./FoodFactory.cpp"
-#include "./GameOver.cpp"
-#include "./GameStartEvent.cpp"
-#include "./HUD.cpp"
-#include "./Player.cpp"
-#include "./Wave.cpp"
+#include "props/props.h"
+#include "scenes/scenes.h"
+#include "characters/characters.h"
+#include "powerups/powerups.h"
+#include "ui/ui.h"
 #include "helpers.h"
 
 using namespace lb;

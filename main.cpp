@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "src/GameStart.cpp"
+#include "scenes/scenes.h"
 #include <latebit/core/configuration/Configuration.h>
 #include <latebit/core/GameManager.h>
 #include <latebit/utils/Logger.h>

@@ -1,6 +1,4 @@
-#include "./GameOverEvent.cpp"
-#include "./GameStartEvent.cpp"
-#include "./ScoreEvent.cpp"
+#include "events/events.h"
 #include <latebit/core/graphics/Colors.h>
 #include <latebit/core/graphics/DisplayManager.h>
 #include <latebit/core/events/EventKeyboard.h>

@@ -1,8 +1,7 @@
-#include "./Bubbles.cpp"
-#include "./Floor.cpp"
-#include "./GameOverEvent.cpp"
-#include "./HUD.cpp"
-#include "./helpers.h"
+#include "props/props.h"
+#include "events/events.h"
+#include "ui/ui.h"
+#include "helpers.h"
 #include <latebit/core/graphics/DisplayManager.h>
 #include <latebit/core/events/EventCollision.h>
 #include <latebit/core/events/EventKeyboard.h>

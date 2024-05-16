@@ -1,6 +1,4 @@
-#pragma once
-
-#include "ScoreEvent.cpp"
+#include "events/events.h"
 #include <cstdio>
 #include <latebit/core/graphics/Colors.h>
 #include <latebit/core/graphics/DisplayManager.h>
