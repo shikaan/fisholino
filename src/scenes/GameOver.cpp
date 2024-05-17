@@ -8,17 +8,17 @@
 #include <latebit/core/objects/ObjectListIterator.h>
 #include <latebit/core/ResourceManager.h>
 #include <latebit/core/objects/WorldManager.h>
+#include "Scene.h"
 
 using namespace lb;
 
 const Vector CENTER =
     Vector(DM.getHorizontalCells() / 2, DM.getVerticalCells() / 2);
 
-class GameOver : public lb::Object {
+class GameOver : public Scene {
 private:
-  bool shouldDraw = false;
+  bool visible = false;
   int score = 0;
-  Frame background;
   Music *music;
 
 public:
@@ -28,32 +28,21 @@ public:
     setAltitude(4);
     subscribe(SCORE_EVENT);
     subscribe(KEYBOARD_EVENT);
-    subscribe(GAME_OVER);
-    vector<Color> content;
     this->music = RM.getMusic("music");
-    for (int i = 0; i < DM.getHorizontalCells() * DM.getVerticalCells(); i++) {
-      content.push_back(BLACK);
-    }
-    this->background =
-        Frame(DM.getHorizontalCells(), DM.getVerticalCells(), content);
   };
 
+  void play() {
+    DM.setBackground(Color::BLACK);
+    visible = true;
+  }
+
+  void cleanup() {
+    visible = false;
+    score = 0;
+  }
+
   int eventHandler(const Event *p_e) {
-    if (p_e->getType() == GAME_OVER) {
-      shouldDraw = true;
-
-      auto all = WM.getAllObjects();
-      ObjectListIterator oli(&all);
-
-      for (oli.first(); !oli.isDone(); oli.next()) {
-        auto object = oli.currentObject();
-        if (object != this && object->getType() != "GameStart")
-          WM.markForDelete(object);
-      }
-
-      return 1;
-    }
-
+    // TODO: this should be stored in a game state, not duplicated
     if (p_e->getType() == SCORE_EVENT) {
       auto event = static_cast<const ScoreEvent *>(p_e);
       score += event->getPoints();
@@ -62,15 +51,15 @@ public:
 
     if (p_e->getType() == KEYBOARD_EVENT) {
       auto event = static_cast<const EventKeyboard *>(p_e);
-      if (shouldDraw && event->getKey() == Keyboard::ESCAPE) {
+      if (visible && event->getKey() == Keyboard::ESCAPE) {
         GM.setGameOver();
         return 1;
       }
 
-      if (shouldDraw && event->getKey() == Keyboard::RETURN &&
+      if (visible && event->getKey() == Keyboard::RETURN &&
           event->getKeyboardAction() == KEY_PRESSED) {
         WM.onEvent(new GameStartEvent());
-        WM.markForDelete(this);
+        
         return 1;
       }
     }
@@ -79,11 +68,11 @@ public:
   };
 
   int draw() {
-    if (!shouldDraw)
+    if (!visible)
       return 0;
 
     this->music->stop();
-    int result = this->background.draw(Vector());
+    int result = 0;
 
     result += DM.drawString(CENTER - Vector(0, 32), "GAME OVER",
                             TEXT_ALIGN_CENTER, RED, TEXT_SIZE_XLARGE);

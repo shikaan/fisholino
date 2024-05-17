@@ -1,4 +1,3 @@
-#pragma once
 #include <latebit/core/events/Event.h>
 
 using namespace lb;

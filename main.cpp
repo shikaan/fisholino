@@ -31,6 +31,9 @@ void loadResources() {
   if (RM.loadMusic("assets/audio/groovy.lbtune", "music") != 0) {
     printf("Error loading music\n");
   };
+  if (RM.loadSound("assets/audio/death.lbtune", "death") != 0) {
+    printf("Error loading death sound\n");
+  };
 }
 
 int main() {
@@ -38,10 +41,9 @@ int main() {
   GM.startUp();
 
   loadResources();
+  auto SM = new SceneManager();
 
-  DM.setBackground(Color::BLUE);
-  new GameStart();
-
+  WM.onEvent(new GameStartEvent());
   GM.run();
 
   return 0;

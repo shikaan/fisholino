@@ -6,45 +6,52 @@
 #include "powerups/powerups.h"
 #include "ui/ui.h"
 #include "helpers.h"
+#include "Scene.h"
 
 using namespace lb;
 
-class GameStart : public lb::Object {
+class GameStart : public Scene {
 private:
   Music *music = RM.getMusic("music");
+  vector<Object *> objects = {};
+
 
 public:
-  void start() {
-    new HUD();
-    new Player();
-    new FoodFactory();
-    new EnemyFactory();
+  void cleanup() {
+    for (auto object : objects) {
+      WM.markForDelete(object);
+    }
+    objects.clear();
+  }
+  
+  void play() {
+    setActive(true);
+    DM.setBackground(Color::BLUE);
 
-    new Floor();
+    objects.push_back(new HUD());
+    objects.push_back(new Player());
+    objects.push_back(new FoodFactory());
+    objects.push_back(new EnemyFactory());
+
+    objects.push_back(new Floor());
     for (int i = 0; i < 5; i++) {
       auto coral = new Coral();
+      objects.push_back(coral);
       coral->setPosition(
           Vector(i * 30 + randomRange(16, 48), coral->getPosition().getY()));
     }
-    for (int i = 0; i < 20; i++)
-      new Wave;
+    
+    for (int i = 0; i < 20; i++) {
+      auto wave = new Wave();
+      objects.push_back(wave);
+    }
+
     this->music->play(true);
-    new GameOver();
   }
 
   GameStart() {
     setType("GameStart");
-    subscribe(GAME_START);
     this->music = RM.getMusic("music");
-    start();
-  };
-
-  int eventHandler(const Event *p_e) {
-    if (p_e->getType() == GAME_START) {
-      start();
-      return 1;
-    }
-
-    return 0;
+    setActive(false);
   };
 };

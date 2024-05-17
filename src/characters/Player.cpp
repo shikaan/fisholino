@@ -19,6 +19,8 @@ private:
   int dashingTicks = 0;
   int slowdown = 0;
   Sound *dash;
+  Sound *death;
+  vector<Bubbles*> bubbles = {};
 
   int keyboard(Keyboard::Key key) {
     if (key == Keyboard::UPARROW) {
@@ -28,7 +30,7 @@ private:
       move(1);
       return 1;
     } else if (key == Keyboard::SPACE) {
-      dashingTicks = 10;
+      dashingTicks = 15;
       setVelocity(Vector(2, 0));
       setSprite("player-dash");
       this->dash->play();
@@ -58,6 +60,13 @@ public:
     subscribe(COLLISION_EVENT);
     this->slowdown = getAnimation().getSprite()->getSlowdown();
     this->dash = RM.getSound("dash");
+    this->death = RM.getSound("death");
+  }
+
+  ~Player() {
+    for (auto b : this->bubbles) {
+      WM.markForDelete(b);
+    }
   }
 
   int eventHandler(const Event *p_e) {
@@ -86,13 +95,18 @@ public:
       }
 
       if (rand() % 100 == 0) {
-        new Bubbles(getPosition() + Vector(16, 0));
+        auto b = new Bubbles(getPosition() + Vector(16, 0), [this](Bubbles *b) {
+          this->bubbles.erase(std::remove(this->bubbles.begin(), this->bubbles.end(), b), this->bubbles.end());
+          WM.markForDelete(b);
+        });
+        this->bubbles.push_back(b);
       }
 
       return 1;
     }
 
     if (isCollisionWith(p_e, "Enemy")) {
+      this->death->play();
       WM.onEvent(new GameOverEvent());
       return 1;
     }
