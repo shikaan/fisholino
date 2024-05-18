@@ -21,6 +21,7 @@ private:
   Sound *dash;
   Sound *death;
   vector<Bubbles*> bubbles = {};
+  bool isDead = false;
 
   int keyboard(Keyboard::Key key) {
     if (key == Keyboard::UPARROW) {
@@ -70,6 +71,10 @@ public:
   }
 
   int eventHandler(const Event *p_e) {
+    if (this->isDead) {
+      return 0;
+    }
+
     if (p_e->getType() == KEYBOARD_EVENT) {
       auto keyboard_event = static_cast<const EventKeyboard *>(p_e);
       if (keyboard_event->getKeyboardAction() != KEY_PRESSED) {
@@ -106,8 +111,9 @@ public:
     }
 
     if (isCollisionWith(p_e, "Enemy")) {
+      this->isDead = true;
       this->death->play();
-      WM.onEvent(new GameOverEvent());
+      WM.onEvent(new PlayerDeadEvent());
       return 1;
     }
 

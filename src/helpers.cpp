@@ -2,6 +2,7 @@
 
 #include <latebit/core/events/EventCollision.h>
 #include <latebit/core/objects/Object.h>
+#include "helpers.h"
 
 using namespace lb;
 using namespace std;

@@ -1,12 +1,12 @@
-#include <latebit/core/audio/Music.h>
-#include <latebit/core/objects/Object.h>
+#include "Scene.h"
+#include "characters/characters.h"
+#include "helpers.h"
+#include "powerups/powerups.h"
 #include "props/props.h"
 #include "scenes/scenes.h"
-#include "characters/characters.h"
-#include "powerups/powerups.h"
 #include "ui/ui.h"
-#include "helpers.h"
-#include "Scene.h"
+#include <latebit/core/audio/Music.h>
+#include <latebit/core/objects/Object.h>
 
 using namespace lb;
 
@@ -15,15 +15,15 @@ private:
   Music *music = RM.getMusic("music");
   vector<Object *> objects = {};
 
-
 public:
   void cleanup() {
+    this->music->stop();
     for (auto object : objects) {
       WM.markForDelete(object);
     }
     objects.clear();
   }
-  
+
   void play() {
     setActive(true);
     DM.setBackground(Color::BLUE);
@@ -40,7 +40,7 @@ public:
       coral->setPosition(
           Vector(i * 30 + randomRange(16, 48), coral->getPosition().getY()));
     }
-    
+
     for (int i = 0; i < 20; i++) {
       auto wave = new Wave();
       objects.push_back(wave);
@@ -49,9 +49,5 @@ public:
     this->music->play(true);
   }
 
-  GameStart() {
-    setType("GameStart");
-    this->music = RM.getMusic("music");
-    setActive(false);
-  };
+  GameStart() { setType("GameStart"); };
 };
