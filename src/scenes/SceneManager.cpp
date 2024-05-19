@@ -1,6 +1,6 @@
 #include "Death.cpp"
+#include "Game.cpp"
 #include "GameOver.cpp"
-#include "GameStart.cpp"
 #include "Scene.h"
 #include "events/events.h"
 #include <latebit/core/objects/Object.h>
@@ -10,7 +10,7 @@ using namespace lb;
 
 class SceneManager : public Object {
 private:
-  unordered_map<string, Scene *> scenes = {{GAME_START, new GameStart()},
+  unordered_map<string, Scene *> scenes = {{GAME_START, new Game()},
                                            {GAME_OVER, new GameOver()},
                                            {PLAYER_DEAD, new Death()}};
   Scene *currentScene = nullptr;

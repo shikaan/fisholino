@@ -10,7 +10,7 @@
 
 using namespace lb;
 
-class GameStart : public Scene {
+class Game : public Scene {
 private:
   Music *music = RM.getMusic("music");
   vector<Object *> objects = {};
@@ -49,5 +49,5 @@ public:
     this->music->play(true);
   }
 
-  GameStart() { setType("GameStart"); };
+  Game() { setType("Game"); };
 };
