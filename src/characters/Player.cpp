@@ -19,10 +19,14 @@ using namespace lb;
 class Player : public Object {
 private:
   const int initialSlowdown;
-  int dashingTicks = 0;
+  const int INITIAL_DASHING_STEPS = 15;
+  const int INITIAL_COOLDOWN_STEPS = 30;
+  int dashingSteps = 0;
+  int cooldownSteps = 0;
   // This cannot be made smart: the garbage collection would delete the sound
   // from resource manager
   Sound *dash = RM.getSound("dash");
+  Sound *bad = RM.getSound("bad");
   bool isDead = false;
 
   int keyboard(Keyboard::Key key) {
@@ -32,8 +36,9 @@ private:
     } else if (key == Keyboard::DOWNARROW) {
       move(1);
       return 1;
-    } else if (key == Keyboard::SPACE) {
-      dashingTicks = 15;
+    } else if (key == Keyboard::SPACE && cooldownSteps <= 0) {
+      dashingSteps = INITIAL_DASHING_STEPS;
+      cooldownSteps = INITIAL_COOLDOWN_STEPS;
       setVelocity(Vector(2, 0));
       setSprite("player-dash");
       this->dash->play();
@@ -61,6 +66,7 @@ public:
     subscribe(KEYBOARD_EVENT);
     subscribe(STEP_EVENT);
     subscribe(COLLISION_EVENT);
+    subscribe(OUT_EVENT);
   }
 
   ~Player() {
@@ -86,10 +92,20 @@ public:
       return keyboard(key);
     }
 
+    if (e->getType() == OUT_EVENT) {
+      this->bad->play();
+      cooldownSteps = 200;
+      return 1;
+    }
+
     if (e->getType() == STEP_EVENT) {
-      if (dashingTicks > 0) {
-        dashingTicks--;
-        if (dashingTicks == 0) {
+      if (cooldownSteps > 0) {
+        cooldownSteps--;
+      }
+
+      if (dashingSteps > 0) {
+        dashingSteps--;
+        if (dashingSteps == 0) {
           setSprite("player-idle");
           setVelocity(Vector(-1, 0));
         }

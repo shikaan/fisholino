@@ -42,6 +42,7 @@ void loadResources() {
   loadSound("dash");
   loadSound("death");
   loadSound("confirm");
+  loadSound("bad");
 
   loadMusic("groovy");
   loadMusic("swimback");
