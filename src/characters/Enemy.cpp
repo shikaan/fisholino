@@ -26,7 +26,7 @@ private:
         floor((v - Floor::HEIGHT - HUD::HEIGHT) / (float)spriteHeight);
 
     int lane = randomRange(0, lanes);
-    setVelocity(Vector(-1, 0));
+    setVelocity(Vector(-1 - State::getScore() / 100.0, 0));
     Vector pos(randomRange(h, 2 * h), HUD::HEIGHT + lane * spriteHeight);
     setPosition(pos);
   }
