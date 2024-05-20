@@ -2,6 +2,7 @@
 #include "Game.cpp"
 #include "GameOver.cpp"
 #include "Scene.h"
+#include "Welcome.cpp"
 #include "events/events.h"
 #include <latebit/core/objects/Object.h>
 #include <unordered_map>
@@ -12,7 +13,8 @@ class SceneManager : public Object {
 private:
   unordered_map<string, Scene *> scenes = {{GAME_START, new Game()},
                                            {GAME_OVER, new GameOver()},
-                                           {PLAYER_DEAD, new Death()}};
+                                           {PLAYER_DEAD, new Death()},
+                                           {"", new Welcome()}};
   Scene *currentScene = nullptr;
 
 public:
@@ -25,10 +27,14 @@ public:
     subscribe(GAME_START);
     subscribe(GAME_OVER);
     subscribe(PLAYER_DEAD);
+
+    this->currentScene = scenes[""];
+    this->currentScene->setActive(true);
+    this->currentScene->play();
   }
 
-  int eventHandler(const Event *p_e) {
-    auto scene = scenes[p_e->getType()];
+  int eventHandler(const Event *e) {
+    auto scene = scenes[e->getType()];
     if (scene) {
       if (this->currentScene) {
         this->currentScene->setActive(false);

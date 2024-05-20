@@ -1,10 +1,10 @@
 #include <stdio.h>
 
 #include "scenes/scenes.h"
-#include <latebit/core/configuration/Configuration.h>
 #include <latebit/core/GameManager.h>
-#include <latebit/utils/Logger.h>
 #include <latebit/core/ResourceManager.h>
+#include <latebit/core/configuration/Configuration.h>
+#include <latebit/utils/Logger.h>
 
 using namespace lb;
 using namespace std;
@@ -13,6 +13,20 @@ void loadSprite(const char *label) {
   std::string filePath = "assets/sprites/" + std::string(label) + ".txt";
   if (RM.loadTextSprite(filePath.c_str(), label) != 0) {
     printf("Error loading %s sprite\n", label);
+  };
+}
+
+void loadSound(const char *label) {
+  std::string filePath = "assets/audio/" + std::string(label) + ".lbtune";
+  if (RM.loadSound(filePath, label) != 0) {
+    printf("Error loading %s sound\n", label);
+  };
+}
+
+void loadMusic(const char *label) {
+  std::string filePath = "assets/audio/" + std::string(label) + ".lbtune";
+  if (RM.loadMusic(filePath, label) != 0) {
+    printf("Error loading %s music\n", label);
   };
 }
 
@@ -25,15 +39,12 @@ void loadResources() {
   loadSprite("food");
   loadSprite("waves");
 
-  if (RM.loadSound("assets/audio/dash.lbtune", "dash") != 0) {
-    printf("Error loading dash sound\n");
-  };
-  if (RM.loadMusic("assets/audio/groovy.lbtune", "music") != 0) {
-    printf("Error loading music\n");
-  };
-  if (RM.loadSound("assets/audio/death.lbtune", "death") != 0) {
-    printf("Error loading death sound\n");
-  };
+  loadSound("dash");
+  loadSound("death");
+  loadSound("confirm");
+
+  loadMusic("groovy");
+  loadMusic("swimback");
 }
 
 int main() {
@@ -43,7 +54,6 @@ int main() {
   loadResources();
   auto SM = new SceneManager();
 
-  WM.onEvent(new GameStartEvent());
   GM.run();
 
   return 0;
