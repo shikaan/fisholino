@@ -71,13 +71,13 @@ public:
     }
   }
 
-  int eventHandler(const Event *p_e) {
+  int eventHandler(const Event *e) {
     if (this->isDead) {
       return 0;
     }
 
-    if (p_e->getType() == KEYBOARD_EVENT) {
-      auto keyboard_event = static_cast<const EventKeyboard *>(p_e);
+    if (e->getType() == KEYBOARD_EVENT) {
+      auto keyboard_event = static_cast<const EventKeyboard *>(e);
       if (keyboard_event->getKeyboardAction() != KEY_PRESSED) {
         return 0;
       }
@@ -86,7 +86,7 @@ public:
       return keyboard(key);
     }
 
-    if (p_e->getType() == STEP_EVENT) {
+    if (e->getType() == STEP_EVENT) {
       if (dashingTicks > 0) {
         dashingTicks--;
         if (dashingTicks == 0) {
@@ -108,7 +108,7 @@ public:
       return 1;
     }
 
-    if (isCollisionWith(p_e, "Enemy")) {
+    if (isCollisionWith(e, "Enemy")) {
       this->isDead = true;
       WM.onEvent(new PlayerDeadEvent());
       return 1;

@@ -2,12 +2,13 @@
 
 #include <cmath>
 
-#include "props/props.h"
-#include "ui/ui.h"
 #include "events/events.h"
 #include "helpers.h"
-#include <latebit/core/graphics/DisplayManager.h>
+#include "props/props.h"
+#include "state.h"
+#include "ui/ui.h"
 #include <latebit/core/events/EventOut.h>
+#include <latebit/core/graphics/DisplayManager.h>
 #include <latebit/core/objects/Object.h>
 #include <latebit/core/objects/WorldManager.h>
 
@@ -40,9 +41,9 @@ public:
     subscribe(OUT_EVENT);
   }
 
-  int eventHandler(const Event *p_e) {
-    if (p_e->getType() == OUT_EVENT) {
-      WM.onEvent(new ScoreEvent(1));
+  int eventHandler(const Event *e) {
+    if (e->getType() == OUT_EVENT) {
+      State::addScore(1);
       initialize();
       return 1;
     }

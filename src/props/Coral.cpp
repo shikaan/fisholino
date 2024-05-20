@@ -42,8 +42,8 @@ public:
     initialize();
   }
 
-  int eventHandler(const Event *p_e) {
-    if (p_e->getType() == OUT_EVENT) {
+  int eventHandler(const Event *e) {
+    if (e->getType() == OUT_EVENT) {
       initialize();
       return 1;
     }

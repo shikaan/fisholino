@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "events/events.h"
 #include "helpers.h"
+#include "state.h"
 #include <latebit/core/GameManager.h>
 #include <latebit/core/ResourceManager.h>
 #include <latebit/core/audio/Music.h>
@@ -14,15 +15,12 @@
 using namespace lb;
 
 class GameOver : public Scene {
-private:
-  int score = 0;
-
 public:
   GameOver() {
     setType("GameOver");
     setSolidness(lb::SPECTRAL);
     setAltitude(4);
-    subscribe(SCORE_EVENT);
+    subscribe(SCORE_UPDATED_EVENT);
     subscribe(KEYBOARD_EVENT);
   };
 
@@ -31,28 +29,17 @@ public:
     setVisible(true);
   }
 
-  void cleanup() {
-    setVisible(false);
-    score = 0;
-  }
+  void cleanup() {}
 
-  int eventHandler(const Event *p_e) {
-    // TODO: this should be stored in a game state, not duplicated
-    if (p_e->getType() == SCORE_EVENT) {
-      auto event = static_cast<const ScoreEvent *>(p_e);
-      score += event->getPoints();
-      return 1;
-    }
-
-    if (p_e->getType() == KEYBOARD_EVENT) {
-      auto event = static_cast<const EventKeyboard *>(p_e);
-      auto visible = isVisible();
-      if (visible && event->getKey() == Keyboard::ESCAPE) {
+  int eventHandler(const Event *e) {
+    if (e->getType() == KEYBOARD_EVENT) {
+      auto event = static_cast<const EventKeyboard *>(e);
+      if (event->getKey() == Keyboard::ESCAPE) {
         GM.setGameOver();
         return 1;
       }
 
-      if (visible && event->getKey() == Keyboard::RETURN &&
+      if (event->getKey() == Keyboard::RETURN &&
           event->getKeyboardAction() == KEY_PRESSED) {
         WM.onEvent(new GameStartEvent());
 
@@ -72,7 +59,7 @@ public:
                             TEXT_ALIGN_CENTER, WHITE, TEXT_SIZE_XLARGE);
 
     char s[16];
-    snprintf(s, 16, "SCORE: %d", score);
+    snprintf(s, 16, "SCORE: %d", State::getScore());
     result +=
         DM.drawString(CENTER, s, TEXT_ALIGN_CENTER, WHITE, TEXT_SIZE_LARGE);
 

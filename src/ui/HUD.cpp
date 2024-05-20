@@ -22,7 +22,7 @@ public:
     setType("HUD");
     setSolidness(SPECTRAL);
     setAltitude(lb::MAX_ALTITUDE);
-    subscribe(SCORE_EVENT);
+    subscribe(SCORE_UPDATED_EVENT);
     vector<Color> content;
     for (int i = 0; i < WIDTH * HEIGHT; i++)
       content.push_back(BLACK);
@@ -40,10 +40,10 @@ public:
     return result;
   }
 
-  int eventHandler(const Event *p_e) {
-    if (p_e->getType() == SCORE_EVENT) {
-      auto event = static_cast<const ScoreEvent *>(p_e);
-      score += event->getPoints();
+  int eventHandler(const Event *e) {
+    if (e->getType() == SCORE_UPDATED_EVENT) {
+      auto event = static_cast<const ScoreUpdated *>(e);
+      score = event->points;
       return 1;
     }
     return 0;

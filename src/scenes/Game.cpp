@@ -33,6 +33,7 @@ public:
 
   void play() {
     DM.setBackground(Color::BLUE);
+    State::setScore(0);
     new HUD();
     new Player();
     new FoodFactory();

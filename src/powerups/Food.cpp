@@ -1,9 +1,10 @@
-#include "props/props.h"
-#include "ui/ui.h"
 #include "events/events.h"
 #include "helpers.h"
-#include <latebit/core/graphics/DisplayManager.h>
+#include "props/props.h"
+#include "state.h"
+#include "ui/ui.h"
 #include <latebit/core/events/EventOut.h>
+#include <latebit/core/graphics/DisplayManager.h>
 #include <latebit/core/objects/Object.h>
 #include <latebit/core/objects/WorldManager.h>
 
@@ -29,15 +30,15 @@ public:
     initialize();
   }
 
-  int eventHandler(const Event *p_e) {
-    if (p_e->getType() == OUT_EVENT) {
+  int eventHandler(const Event *e) {
+    if (e->getType() == OUT_EVENT) {
       initialize();
       return 1;
     }
 
-    if (isCollisionWith(p_e, "Player")) {
+    if (isCollisionWith(e, "Player")) {
       WM.markForDelete(this);
-      WM.onEvent(new ScoreEvent(5));
+      State::addScore(5);
       return 1;
     }
 
