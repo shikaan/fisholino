@@ -11,38 +11,45 @@ using namespace lb;
 
 class SceneManager : public Object {
 private:
-  unordered_map<string, Scene *> scenes = {{GAME_START, new Game()},
-                                           {GAME_OVER, new GameOver()},
-                                           {PLAYER_DEAD, new Death()},
-                                           {"", new Welcome()}};
+  Game game = Game();
+  GameOver gameOver = GameOver();
+  Death death = Death();
+  Welcome welcome = Welcome();
+
+  unordered_map<string, Scene *> eventToScene = {{GAME_START, &game},
+                                                 {GAME_OVER, &gameOver},
+                                                 {PLAYER_DEAD, &death},
+                                                 {BOOT, &welcome}};
+
   Scene *currentScene = nullptr;
 
 public:
   SceneManager() {
     setType("SceneManager");
-    for (auto &scene : scenes) {
-      scene.second->setActive(false);
-    }
+    gameOver.setActive(false);
+    death.setActive(false);
+    welcome.setActive(false);
+    // To receive the boot event. That's the only case where we need two scenes
+    // active at the same time.
+    game.setActive(true);
 
     subscribe(GAME_START);
     subscribe(GAME_OVER);
     subscribe(PLAYER_DEAD);
-
-    this->currentScene = scenes[""];
-    this->currentScene->setActive(true);
-    this->currentScene->play();
+    subscribe(BOOT);
   }
 
   int eventHandler(const Event *e) {
-    auto scene = scenes[e->getType()];
-    if (scene) {
+    auto it = eventToScene.find(e->getType());
+    if (it != eventToScene.end()) {
+      auto &scene = it->second;
       if (this->currentScene) {
         this->currentScene->setActive(false);
         this->currentScene->cleanup();
       }
-      this->currentScene = scene;
-      this->currentScene->setActive(true);
+      scene->setActive(true);
       scene->play();
+      this->currentScene = scene;
       return 1;
     }
     return 0;

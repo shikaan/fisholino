@@ -54,6 +54,7 @@ int main() {
   loadResources();
   auto SM = new SceneManager();
 
+  WM.onEvent(new BootEvent());
   GM.run();
 
   return 0;

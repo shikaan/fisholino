@@ -15,7 +15,6 @@ using namespace lb;
 
 class GameOver : public Scene {
 private:
-  bool visible = false;
   int score = 0;
 
 public:
@@ -29,11 +28,11 @@ public:
 
   void play() {
     DM.setBackground(Color::BLACK);
-    visible = true;
+    setVisible(true);
   }
 
   void cleanup() {
-    visible = false;
+    setVisible(false);
     score = 0;
   }
 
@@ -47,6 +46,7 @@ public:
 
     if (p_e->getType() == KEYBOARD_EVENT) {
       auto event = static_cast<const EventKeyboard *>(p_e);
+      auto visible = isVisible();
       if (visible && event->getKey() == Keyboard::ESCAPE) {
         GM.setGameOver();
         return 1;
@@ -64,9 +64,6 @@ public:
   };
 
   int draw() {
-    if (!visible)
-      return 0;
-
     int result = 0;
 
     result += DM.drawString(CENTER - Vector(0, 32), "GAME OVER",

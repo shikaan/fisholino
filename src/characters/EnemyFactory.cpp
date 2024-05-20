@@ -15,16 +15,16 @@ private:
   const int INTERVAL = 60;
   const int COUNT = 5;
 
-  ObjectList m_enemies = ObjectList();
-  int m_allowedCount = COUNT;
-  int m_interval = INTERVAL;
+  ObjectList enemies = ObjectList();
+  int allowedCount = COUNT;
+  int interval = INTERVAL;
 
   void placeEnemy(Object *enemy) {
     auto position = enemy->getPosition();
     auto enemyBox = enemy->getWorldBox();
 
     // check overlap with other enemies
-    ObjectListIterator oli(&m_enemies);
+    ObjectListIterator oli(&enemies);
     for (oli.first(); !oli.isDone(); oli.next()) {
       auto other = oli.currentObject();
       if (other == enemy)
@@ -43,12 +43,12 @@ public:
   EnemyFactory() {
     setType("EnemyFactory");
 
-    for (int i = 0; i < m_allowedCount; i++)
-      createEnemy(m_enemies);
+    for (int i = 0; i < allowedCount; i++)
+      createEnemy(enemies);
   };
 
   ~EnemyFactory() {
-    ObjectListIterator oli(&m_enemies);
+    ObjectListIterator oli(&enemies);
 
     for (oli.first(); !oli.isDone(); oli.next()) {
       WM.markForDelete(oli.currentObject());
@@ -57,22 +57,21 @@ public:
 
   int eventHandler(const Event *p_e) {
     if (p_e->getType() == STEP_EVENT) {
-      if (m_interval > 0) {
-        m_interval--;
+      if (interval > 0) {
+        interval--;
         return 1;
       }
     }
 
-    if (m_interval == 0) {
-      ObjectListIterator oli(&m_enemies);
+    if (interval == 0) {
       ObjectList newEnemies = WM.objectsOfType("Enemy");
 
-      if (newEnemies.getCount() < m_allowedCount) {
+      if (newEnemies.getCount() < allowedCount) {
         createEnemy(newEnemies);
       }
 
-      m_enemies = newEnemies;
-      m_interval = INTERVAL;
+      enemies = newEnemies;
+      interval = INTERVAL;
       return 1;
     }
 

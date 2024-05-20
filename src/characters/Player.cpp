@@ -1,26 +1,28 @@
-#include "props/props.h"
 #include "events/events.h"
-#include "ui/ui.h"
 #include "helpers.h"
-#include <latebit/core/graphics/DisplayManager.h>
+#include "props/props.h"
+#include "ui/ui.h"
+#include <latebit/core/ResourceManager.h>
+#include <latebit/core/audio/Sound.h>
 #include <latebit/core/events/EventCollision.h>
 #include <latebit/core/events/EventKeyboard.h>
 #include <latebit/core/events/EventStep.h>
+#include <latebit/core/graphics/DisplayManager.h>
 #include <latebit/core/objects/Object.h>
-#include <latebit/core/ResourceManager.h>
+#include <latebit/core/objects/ObjectList.h>
+#include <latebit/core/objects/ObjectListIterator.h>
 #include <latebit/core/objects/WorldManager.h>
-#include <latebit/core/audio/Sound.h>
 #include <latebit/utils/Math.h>
 
 using namespace lb;
 
 class Player : public Object {
 private:
+  const int initialSlowdown;
   int dashingTicks = 0;
-  int slowdown = 0;
-  Sound *dash;
-  Sound *death;
-  vector<Bubbles*> bubbles = {};
+  // This cannot be made smart: the garbage collection would delete the sound
+  // from resource manager
+  Sound *dash = RM.getSound("dash");
   bool isDead = false;
 
   int keyboard(Keyboard::Key key) {
@@ -42,7 +44,7 @@ private:
 
   void move(int dy) {
     auto position = getPosition();
-    position.setY(clamp((int)position.getY() + dy * 4.0, HUD::HEIGHT + 1.0,
+    position.setY(clamp(position.getY() + dy * 4.0, HUD::HEIGHT + 1.0,
                         DM.getVerticalCells() - (Floor::HEIGHT) -
                             (int)this->getBox().getHeight() - 1));
     setPosition(position);
@@ -51,7 +53,7 @@ private:
   void resetPosition() { setPosition(Vector(6, getPosition().getY())); }
 
 public:
-  Player() {
+  Player() : initialSlowdown(10) {
     setType("Player");
     setSprite("player-idle");
     setSolidness(HARD);
@@ -59,14 +61,13 @@ public:
     subscribe(KEYBOARD_EVENT);
     subscribe(STEP_EVENT);
     subscribe(COLLISION_EVENT);
-    this->slowdown = getAnimation().getSprite()->getSlowdown();
-    this->dash = RM.getSound("dash");
-    this->death = RM.getSound("death");
   }
 
   ~Player() {
-    for (auto b : this->bubbles) {
-      WM.markForDelete(b);
+    ObjectList bubbles = WM.objectsOfType("Bubbles");
+    ObjectListIterator it(&bubbles);
+    for (it.first(); !it.isDone(); it.next()) {
+      WM.markForDelete(it.currentObject());
     }
   }
 
@@ -100,11 +101,8 @@ public:
       }
 
       if (rand() % 100 == 0) {
-        auto b = new Bubbles(getPosition() + Vector(16, 0), [this](Bubbles *b) {
-          this->bubbles.erase(std::remove(this->bubbles.begin(), this->bubbles.end(), b), this->bubbles.end());
-          WM.markForDelete(b);
-        });
-        this->bubbles.push_back(b);
+        auto b = new Bubbles(getPosition() + Vector(16, 0),
+                             [this](Bubbles *b) { WM.markForDelete(b); });
       }
 
       return 1;
@@ -112,7 +110,6 @@ public:
 
     if (isCollisionWith(p_e, "Enemy")) {
       this->isDead = true;
-      this->death->play();
       WM.onEvent(new PlayerDeadEvent());
       return 1;
     }

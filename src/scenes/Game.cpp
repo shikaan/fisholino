@@ -12,62 +12,45 @@ using namespace lb;
 
 class Game : public Scene {
 private:
-  Music *music = RM.getMusic("groovy");
-  vector<Object *> objects = {};
-  vector<Wave *> waves;
-  vector<Coral *> corals;
-
-  void populateCoralsAndWaves() {
-    if (corals.size() == 0) {
-      auto screenWidth = DM.getHorizontalCells();
-      for (int i = 0; i < 5; i++) {
-        auto coral = new Coral();
-        corals.push_back(coral);
-        coral->setPosition(Vector(screenWidth + i * 30 + randomRange(16, 48),
-                                  coral->getPosition().getY()));
-      }
-    }
-
-    if (waves.size() == 0) {
-      for (int i = 0; i < 20; i++) {
-        waves.push_back(new Wave());
-      }
-    }
-  }
+  unique_ptr<Music> music = unique_ptr<Music>(RM.getMusic("groovy"));
 
 public:
   void cleanup() {
     this->music->stop();
-    for (auto object : objects) {
-      WM.markForDelete(object);
+
+    auto objects = WM.getAllObjects();
+    ObjectListIterator oli(&objects);
+
+    for (oli.first(); !oli.isDone(); oli.next()) {
+      auto type = oli.currentObject()->getType();
+      if (type == "HUD" || type == "Player" || type == "Floor" ||
+          type == "FoodFactory" || type == "EnemyFactory" || type == "Coral" ||
+          type == "Wave") {
+        WM.markForDelete(oli.currentObject());
+      }
     }
-    for (auto wave : waves) {
-      WM.markForDelete(wave);
-    }
-    for (auto coral : corals) {
-      WM.markForDelete(coral);
-    }
-    objects.clear();
-    waves.clear();
-    corals.clear();
   }
 
   void play() {
-    setActive(true);
     DM.setBackground(Color::BLUE);
+    new HUD();
+    new Player();
+    new FoodFactory();
+    new EnemyFactory();
+    new Floor();
 
-    objects.push_back(new HUD());
-    objects.push_back(new Player());
-    objects.push_back(new FoodFactory());
-    objects.push_back(new EnemyFactory());
-    objects.push_back(new Floor());
-    populateCoralsAndWaves();
+    ObjectList corals = WM.objectsOfType("Coral");
+    for (int i = corals.getCount(); i < 5; i++) {
+      new Coral();
+    }
+
+    ObjectList waves = WM.objectsOfType("Wave");
+    for (int i = waves.getCount(); i < 20; i++) {
+      new Wave();
+    }
+
     this->music->play(true);
   }
 
-  Game() {
-    setType("Game");
-    // This is needed to display these props in the welcome screen
-    populateCoralsAndWaves();
-  };
+  Game() { setType("Game"); };
 };

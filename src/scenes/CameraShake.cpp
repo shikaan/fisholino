@@ -51,8 +51,8 @@ public:
     WM.setView(this->originalView);
   }
 
-  int eventHandler(const Event *p_e) {
-    if (p_e->getType() == STEP_EVENT) {
+  int eventHandler(const Event *e) {
+    if (e->getType() == STEP_EVENT) {
       this->step();
       return 1;
     }

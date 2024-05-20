@@ -1,8 +1,8 @@
 #include "./Floor.cpp"
 #include "helpers.h"
+#include <latebit/core/events/EventOut.h>
 #include <latebit/core/graphics/Animation.h>
 #include <latebit/core/graphics/DisplayManager.h>
-#include <latebit/core/events/EventOut.h>
 #include <latebit/core/objects/Object.h>
 
 using namespace lb;
@@ -24,12 +24,12 @@ private:
   }
 
 public:
-  Coral() {
+  Coral(int x = 0) {
     setType("Coral");
     setSprite("coral");
     setSolidness(SPECTRAL);
 
-    setPosition(Vector(0, DM.getVerticalCells() - getBox().getHeight() -
+    setPosition(Vector(x, DM.getVerticalCells() - getBox().getHeight() -
                               Floor::HEIGHT));
     setVelocity(Vector(-1, 0));
 

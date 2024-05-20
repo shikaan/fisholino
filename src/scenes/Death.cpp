@@ -8,7 +8,8 @@
 
 class Death : public Scene {
   const int DURATION = 50;
-  unique_ptr<CameraShake> cs = make_unique<CameraShake>(2, DURATION);
+  unique_ptr<CameraShake> camerShake = make_unique<CameraShake>(2, DURATION);
+  unique_ptr<Sound> death = unique_ptr<Sound>(RM.getSound("death"));
   int initial = 0;
 
 public:
@@ -36,10 +37,14 @@ public:
   void play() {
     DM.setBackground(Color::RED);
     initial = 0;
-    cs->start();
+    camerShake->start();
+    death->play();
   }
 
-  void cleanup() { cs->stop(); }
+  void cleanup() {
+    camerShake->stop();
+    death->stop();
+  }
 
   int draw() {
     return DM.drawString(CENTER - Vector(0, 16), "DEATH", TEXT_ALIGN_CENTER,
