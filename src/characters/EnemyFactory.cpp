@@ -19,26 +19,6 @@ private:
   int allowedCount = COUNT;
   int interval = INTERVAL;
 
-  void placeEnemy(Object *enemy) {
-    auto position = enemy->getPosition();
-    auto enemyBox = enemy->getWorldBox();
-
-    // check overlap with other enemies
-    ObjectListIterator oli(&enemies);
-    for (oli.first(); !oli.isDone(); oli.next()) {
-      auto other = oli.currentObject();
-      if (other == enemy)
-        continue;
-      auto otherBox = other->getWorldBox();
-
-      if (intersects(enemyBox, otherBox)) {
-        position = other->getPosition() + Vector(otherBox.getWidth() + 20, 0);
-        enemy->setPosition(position);
-        enemyBox = enemy->getWorldBox();
-      }
-    }
-  }
-
 public:
   EnemyFactory() {
     setType("EnemyFactory");
@@ -48,6 +28,7 @@ public:
   };
 
   ~EnemyFactory() {
+    ObjectList enemies = WM.objectsOfType("Enemy");
     ObjectListIterator oli(&enemies);
 
     for (oli.first(); !oli.isDone(); oli.next()) {
@@ -55,8 +36,8 @@ public:
     }
   };
 
-  int eventHandler(const Event *p_e) {
-    if (p_e->getType() == STEP_EVENT) {
+  int eventHandler(const Event *e) {
+    if (e->getType() == STEP_EVENT) {
       if (interval > 0) {
         interval--;
         return 1;
@@ -78,9 +59,5 @@ public:
     return 0;
   }
 
-  void createEnemy(lb::ObjectList &enemies) {
-    auto newEnemy = new Enemy();
-    placeEnemy(newEnemy);
-    enemies.insert(newEnemy);
-  }
+  void createEnemy(lb::ObjectList &enemies) { new Enemy(); }
 };

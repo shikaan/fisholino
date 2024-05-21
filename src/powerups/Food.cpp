@@ -17,7 +17,9 @@ private:
     const static auto v = DM.getVerticalCells();
 
     Vector position(randomRange(h, 2 * h),
-                    randomRange(HUD::HEIGHT + 1, v - Floor::HEIGHT - 1));
+                    randomRange(HUD::HEIGHT + 1,
+                                v - Floor::HEIGHT - 1 -
+                                    getAnimation().getSprite()->getHeight()));
     setPosition(position);
     setVelocity(Vector(-0.25, 0));
   }
