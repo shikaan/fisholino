@@ -12,6 +12,8 @@ using namespace lb;
 
 class Food : public Object {
 private:
+  Sound *sound = RM.getSound("food");
+
   void initialize() {
     const static auto h = DM.getHorizontalCells();
     const static auto v = DM.getVerticalCells();
@@ -40,6 +42,7 @@ public:
 
     if (isCollisionWith(e, "Player")) {
       WM.markForDelete(this);
+      sound->play();
       State::addScore(5);
       return 1;
     }
