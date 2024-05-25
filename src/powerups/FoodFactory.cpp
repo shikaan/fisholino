@@ -32,8 +32,8 @@ public:
     }
   };
 
-  int eventHandler(const Event *p_e) {
-    if (p_e->getType() == STEP_EVENT) {
+  int eventHandler(const Event *e) {
+    if (e->getType() == STEP_EVENT) {
       if (interval > 0) {
         interval--;
         return 1;

@@ -1,6 +1,6 @@
+#include <latebit/core/events/EventOut.h>
 #include <latebit/core/graphics/Colors.h>
 #include <latebit/core/graphics/DisplayManager.h>
-#include <latebit/core/events/EventOut.h>
 #include <latebit/core/objects/Object.h>
 
 using namespace lb;
@@ -31,8 +31,8 @@ public:
     setAltitude(1);
   }
 
-  int eventHandler(const Event *p_e) {
-    if (p_e->getType() == OUT_EVENT) {
+  int eventHandler(const Event *e) {
+    if (e->getType() == OUT_EVENT) {
       placeOnScreen(DM.getHorizontalCells() + 1);
       return 1;
     }
