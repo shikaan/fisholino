@@ -2,6 +2,7 @@
 #include "helpers.h"
 #include "props/props.h"
 #include "ui/ui.h"
+#include <latebit/core/GameManager.h>
 #include <latebit/core/ResourceManager.h>
 #include <latebit/core/audio/Sound.h>
 #include <latebit/core/events/EventCollision.h>
@@ -36,6 +37,11 @@ private:
     } else if (key == Keyboard::DOWNARROW) {
       move(1);
       return 1;
+    } else if (key == Keyboard::P) {
+      if (GM.isPaused())
+        GM.resume();
+      else
+        GM.pause();
     } else if (key == Keyboard::SPACE && cooldownSteps <= 0) {
       dashingSteps = INITIAL_DASHING_STEPS;
       cooldownSteps = INITIAL_COOLDOWN_STEPS;
@@ -90,6 +96,10 @@ public:
 
       auto key = keyboard_event->getKey();
       return keyboard(key);
+    }
+
+    if (GM.isPaused()) {
+      return 0;
     }
 
     if (e->getType() == OUT_EVENT) {
