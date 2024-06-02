@@ -13,7 +13,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 file(GLOB SRC_FILES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
-  fetch_latebit("v0.4.3" "wasm")
+  fetch_latebit("v0.5.0" "wasm")
   file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR})
   
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/public)
@@ -24,7 +24,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
   target_link_libraries(index PRIVATE latebit)
   target_include_directories(index PRIVATE ${CMAKE_SOURCE_DIR}/src)
 else()
-  fetch_latebit("v0.4.3" ${CMAKE_SYSTEM_NAME})
+  fetch_latebit("v0.5.0" ${CMAKE_SYSTEM_NAME})
 
   add_executable(${PROJECT_NAME} main.cpp ${SRC_FILES})
   target_link_libraries(${PROJECT_NAME} PRIVATE latebit)
