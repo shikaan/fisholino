@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "scenes/scenes.h"
+#include "./scenes/scenes.h"
 #include <latebit/core/GameManager.h>
 #include <latebit/core/ResourceManager.h>
 #include <latebit/core/configuration/Configuration.h>
@@ -17,16 +17,18 @@ void loadSprite(const char *label) {
 }
 
 void loadSound(const char *label) {
-  std::string filePath = "assets/audio/" + std::string(label) + ".lbtune";
+  std::string filePath = "assets/audio/" + std::string(label) + ".lbsfx";
   if (RM.loadSound(filePath, label) != 0) {
     printf("Error loading %s sound\n", label);
+    exit(1);
   };
 }
 
 void loadMusic(const char *label) {
-  std::string filePath = "assets/audio/" + std::string(label) + ".lbtune";
+  std::string filePath = "assets/audio/" + std::string(label) + ".lbmus";
   if (RM.loadMusic(filePath, label) != 0) {
     printf("Error loading %s music\n", label);
+    exit(1);
   };
 }
 
@@ -44,9 +46,9 @@ void loadResources() {
   loadSound("confirm");
   loadSound("bad");
   loadSound("food");
+  loadSound("swimback");
 
   loadMusic("groovy");
-  loadMusic("swimback");
 }
 
 int main() {

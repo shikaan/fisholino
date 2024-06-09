@@ -1,5 +1,5 @@
 #include <latebit/core/ResourceManager.h>
-#include <latebit/core/audio/Music.h>
+#include <latebit/core/audio/Sound.h>
 #include <latebit/core/geometry/Vector.h>
 #include <latebit/core/graphics/DisplayManager.h>
 #include <latebit/core/objects/Object.h>
@@ -10,7 +10,7 @@ using namespace std;
 
 class Fish : public Object {
 private:
-  unique_ptr<Music> swim = unique_ptr<Music>(RM.getMusic("swimback"));
+  unique_ptr<Sound> swim = unique_ptr<Sound>(RM.getSound("swimback"));
 
 public:
   Fish(Vector position) {

@@ -21,6 +21,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Emscripten")
 
   add_executable(index main.cpp ${SRC_FILES})
   set_target_properties(index PROPERTIES LINK_FLAGS "-sUSE_SDL=2 -sSTACK_SIZE=1MB -sEXPORTED_RUNTIME_METHODS=['callMain'] --preload-file assets")
+  target_include_directories(index PRIVATE ${CMAKE_SOURCE_DIR}/src)
   target_link_libraries(index PRIVATE latebit)
 else()
   fetch_latebit("v0.5.0" ${CMAKE_SYSTEM_NAME})
